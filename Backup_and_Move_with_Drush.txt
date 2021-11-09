@@ -1,0 +1,21 @@
+# Go to the web root
+cd /var/www/lamrt.org.uk
+
+# Use Drush to dump the database (creates a gzip file)
+vendor/bin/drush sql:dump --gzip --result-file=../2021-11-09.sql
+ 
+# Move it out of the we root to home directory
+mv 2021-11-09.sql.gz ~/
+
+# Copy the files
+sudo cp -r lamrt.org.uk lamrt.org.uk.bak.2021-11-09
+
+# Move them out of the we root to home directory
+sudo mv lamrt.org.uk.bak.2021-11-09/ ~/
+
+# Compress them
+tar -czvf lamart.2021-11-09.tar.gz lamrt.org.uk.bak.2021-11-09/
+
+# Copy to other server
+scp lamart.2021-11-09.tar.gz remote_username@<IP Address>:/remote/directory
+scp 2021-11-09.sql.gz remote_username@<IP Address>:/remote/directory
