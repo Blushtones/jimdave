@@ -1,0 +1,46 @@
+# Docker-compose boilder plate for yse with drupal development
+
+version: "3.3"
+
+services:
+  drupal:
+    image: drupal:8.9.19
+    container_name: drupal
+    volumes:
+      # the next line should be a path to your backed up site files and it's location within a drupal install
+      # - ${FILES_PATH}<local sub path>:/var/www/<drupal file location>
+      - ${FILES_PATH}apache/sites-available:/etc/apache2/sites-available
+      - ${FILES_PATH}apache/sites-enabled:/etc/apache2/sites-enabled
+      - ${FILES_PATH}tmp/drupal:/tmp
+    ports:
+      - 80:80
+    restart: always
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PW}
+      # the below must match those that are stated in your settings.php file
+      MYSQL_DATABASE: ${DRUPAL_DB}
+      MYSQL_USER: ${DRUPAL_USER}
+      MYSQL_PASSWORD: ${DRUPAL_PW}
+    ports:
+      - 3306:3306
+
+    volumes:
+      - ${FILES_PATH}drupal_db/:/var/lib/mysql
+      # when initiating the database for the first time uncomment the below file and place your sql back up in it, once the database has started and verified this line can be commented out again
+      # - ${FILES_PATH}/tmp/drupal_db:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: localhost
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    ports:
+      - 8080:80
