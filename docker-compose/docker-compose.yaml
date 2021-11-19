@@ -8,7 +8,7 @@ services:
     container_name: drupal
     volumes:
       # the next line should be a path to your backed up site files and it's location within a drupal install
-      # - ${FILES_PATH}<local sub path>:/var/www/<drupal file location>
+      - ${FILES_PATH}drupal/${DRUPAL_SITE_FILES}:/var/www/${DRUPAL_SITE_FILES}
       - ${FILES_PATH}apache/sites-available:/etc/apache2/sites-available
       - ${FILES_PATH}apache/sites-enabled:/etc/apache2/sites-enabled
       - ${FILES_PATH}tmp/drupal:/tmp
@@ -31,8 +31,10 @@ services:
 
     volumes:
       - ${FILES_PATH}drupal_db/:/var/lib/mysql
-      # when initiating the database for the first time uncomment the below file and place your sql back up in it, once the database has started and verified this line can be commented out again
-      # - ${FILES_PATH}/tmp/drupal_db:/docker-entrypoint-initdb.d
+      # the next line is used when initiating the database for the first time
+      # Place your sql backup (.sh, .sql and .sql.gz files work) in the local directory
+      # If a database already exists it will be ignored.
+      - ${FILES_PATH}/tmp/drupal_db:/docker-entrypoint-initdb.d
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
