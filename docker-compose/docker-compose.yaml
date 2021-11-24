@@ -6,6 +6,7 @@ services:
   drupal:
     image: drupal:8.9.19
     container_name: drupal
+    depends_on: db
     volumes:
       # the next line should be a path to your backed up site files and it's location within a drupal install
       - ${FILES_PATH}drupal/${DRUPAL_SITE_FILES}:/var/www/${DRUPAL_SITE_FILES}
@@ -39,6 +40,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
+    depends_on: db
     restart: always
     environment:
       PMA_HOST: localhost
