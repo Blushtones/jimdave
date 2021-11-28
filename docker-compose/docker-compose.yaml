@@ -12,7 +12,6 @@ services:
       - ${FILES_PATH}drupal/${DRUPAL_SITE_FILES}:/var/www/${DRUPAL_SITE_FILES}
       - ${FILES_PATH}apache/sites-available:/etc/apache2/sites-available
       - ${FILES_PATH}apache/sites-enabled:/etc/apache2/sites-enabled
-      - ${FILES_PATH}tmp/drupal:/temp
     ports:
       - 80:80
     restart: always
