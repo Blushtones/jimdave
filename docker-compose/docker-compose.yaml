@@ -4,7 +4,9 @@ version: "3.3"
 
 services:
   drupal:
-    image: drupal:8.9.19
+    build: 
+      context: .
+      dockerfile: Dockerfile
     container_name: drupal
     depends_on: 
       - db
@@ -16,6 +18,12 @@ services:
     ports:
       - 80:80
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 6G
+        reservations:
+          memory: 6G
 
   db:
     image: mysql:5.7
@@ -29,6 +37,12 @@ services:
       MYSQL_PASSWORD: ${DRUPAL_PW}
     ports:
       - 3306:3306
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 1G
 
     volumes:
       - ${FILES_PATH}drupal_db/:/var/lib/mysql
@@ -49,3 +63,9 @@ services:
       PMA_ARBITRARY: 1
     ports:
       - 8080:80
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 1G
