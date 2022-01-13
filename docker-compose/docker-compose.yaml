@@ -3,13 +3,13 @@
 version: "3.3"
 
 services:
-  drupal:
+  drupal9:
     build: 
       context: .
       dockerfile: Dockerfile
-    container_name: drupal
+    container_name: drupal9
     depends_on: 
-      - db
+      - db2
     volumes:
       # the next line should be a path to your backed up site files and it's location within a drupal install
       - ${FILES_PATH}drupal/${DRUPAL_SITE_FILES}:/var/www/${DRUPAL_SITE_FILES}
@@ -25,9 +25,9 @@ services:
         reservations:
           memory: 6G
 
-  db:
+  db2:
     image: mysql:5.7
-    container_name: db
+    container_name: db2
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PW}
@@ -51,11 +51,11 @@ services:
       # If a database already exists it will be ignored.
       - ${FILES_PATH}/tmp/drupal_db:/docker-entrypoint-initdb.d
 
-  phpmyadmin:
+  phpmyadmin2:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: phpmyadmin2
     depends_on: 
-      - db
+      - db2
     restart: always
     environment:
       PMA_HOST: localhost
