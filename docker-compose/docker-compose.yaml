@@ -69,3 +69,11 @@ services:
           memory: 1G
         reservations:
           memory: 1G
+  selenium:
+    image: selenium/standalone-chrome:4.1.1-20211217
+    container_name: selenium
+    restart: always
+    ports:
+      - 4444:4444
+      - 7900:7900
+    shm_size: 2gb
