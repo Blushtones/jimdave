@@ -8,6 +8,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: drupal
+    networks:
+      - devnet
     depends_on: 
       - db
     volumes:
@@ -28,6 +30,8 @@ services:
   db:
     image: mysql:5.7
     container_name: db
+    networks:
+      - devnet
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PW}
@@ -54,6 +58,8 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
+    networks:
+      - devnet
     depends_on: 
       - db
     restart: always
@@ -69,3 +75,7 @@ services:
           memory: 1G
         reservations:
           memory: 1G
+networks:
+  devnet:
+    external: false
+    name: devnet
