@@ -31,7 +31,7 @@ services:
       - ${FILES_PATH}apache/sites-enabled:/etc/apache2/sites-enabled
     labels:
       - "traefik.http.routers.drupal.entrypoints=websecure"
-      - "traefik.http.routers.drupal.rule=Host(`whoami.localhost`, `lamrt.org.uk`, `www.lamrt.org.uk`)"
+      - "traefik.http.routers.drupal.rule=Host(`lamrt.org.uk`, `www.lamrt.org.uk`)"
       - "traefik.http.routers.drupal.tls=true"
     links:
       - db
