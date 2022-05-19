@@ -36,9 +36,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 6G
+          memory: 384m
         reservations:
-          memory: 6G
+          memory: 384m
 
   db:
     image: mysql:5.7
@@ -53,9 +53,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1G
+          memory: 512m
         reservations:
-          memory: 1G
+          memory: 512m
 
     volumes:
       - ${FILES_PATH}drupal_db/:/var/lib/mysql
